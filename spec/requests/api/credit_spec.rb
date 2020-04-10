@@ -340,4 +340,80 @@ describe 'Credit API behavior' do
       end
     end
   end
+
+  describe 'with eternity token' do
+    before do
+      Sbpayment.configure do |x|
+        x.sandbox = true
+        x.merchant_id = '30132'
+        x.service_id = '002'
+        x.basic_auth_user = '30132002'
+        x.basic_auth_password = '8435dbd48f2249807ec216c3d5ecab714264cc4a'
+        x.hashkey = '8435dbd48f2249807ec216c3d5ecab714264cc4a'
+      end
+      @cust_code_for_request_with_token = SecureRandom.hex
+    end
+
+    around do |e|
+      VCR.use_cassette 'create-customer-with-eternity-token-and-authorization-by-eternity-token' do
+        e.run
+      end
+    end
+
+    describe 'create customer with eternity-token, authorization by eternity-token' do
+      before do
+        @token, @token_key = get_tokens
+      end
+
+      it 'works' do
+        req = Sbpayment::API::Credit::CreateCustomerTokenForEternityTokenRequest.new
+        req.cust_code = @cust_code_for_request_with_token
+        req.encrypted_flg = '0'
+        req.pay_option_manage.token = @token
+        req.pay_option_manage.token_key = @token_key
+        req.pay_method_info.resrv1 = 'テストユーザー'
+        customer_res = req.perform
+
+        expect(customer_res.status).to eq 200
+        expect(customer_res.headers['content-type']).to include 'text/xml'
+        expect(customer_res.body[:res_result]).to eq 'OK'
+
+        req = Sbpayment::API::Credit::AuthorizationEternityTokenRequest.new
+        req.encrypted_flg = '0'
+        req.cust_code = 'Quipper Customer ID'
+        req.order_id = SecureRandom.hex
+        req.item_id = 'item_1'
+        req.item_name = 'item'
+        req.amount = 1250
+
+        detail = Sbpayment::API::Credit::AuthorizationEternityTokenRequest::Detail.new
+        detail.dtl_rowno = 1
+        detail.dtl_item_id = 'item_1'
+        detail.dtl_item_name = 'item 1'
+        detail.dtl_item_count = 2
+        detail.dtl_amount = 500
+        req.dtls << detail
+
+        detail = Sbpayment::API::Credit::AuthorizationEternityTokenRequest::Detail.new
+        detail.dtl_rowno = 2
+        detail.dtl_item_id = 'item_2'
+        detail.dtl_item_name = 'item 2'
+        detail.dtl_item_count = 1
+        detail.dtl_amount = 250
+        req.dtls << detail
+
+        req.pay_method_info.dealings_type = 10
+        req.pay_method_info.tokenized_pan = customer_res.body[:'res_pay_method_info.tokenized_pan']
+        req.pay_method_info.cc_expiration = customer_res.body[:'res_pay_method_info.cc_expiration']
+        req.pay_option_manage.cust_manage_flg = '1'
+
+        res = req.perform
+        expect(res.status).to eq 200
+        expect(res.headers['content-type']).to include 'text/xml'
+        expect(res.body[:res_result]).to eq 'OK'
+        expect(res.body[:'res_pay_method_info.cardbrand_code']).to eq "M"
+        expect(res.error).to be_nil
+      end
+    end
+  end
 end
