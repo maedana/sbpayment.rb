@@ -153,4 +153,50 @@ describe 'Customer API behavior' do
       end
     end
   end
+
+  describe 'with token for eternity token' do
+    before :each do
+      Sbpayment.configure do |x|
+        x.sandbox = true
+        x.merchant_id = '30132'
+        x.service_id = '002'
+        x.basic_auth_user = '30132002'
+        x.basic_auth_password = '8435dbd48f2249807ec216c3d5ecab714264cc4a'
+        x.hashkey = '8435dbd48f2249807ec216c3d5ecab714264cc4a'
+        x.cipher_code = 'c'*24
+        x.cipher_iv = 'aaaaaaaa'
+      end
+    end
+
+    before :all do
+      @cust_code_for_request_with_token = SecureRandom.hex
+    end
+
+    describe 'create with token' do
+      before do
+        @token, @token_key = get_tokens
+      end
+
+      around do |e|
+        VCR.use_cassette 'customer-api-create-with-token-for-eternity-token' do
+          e.run
+        end
+      end
+
+      it 'returns OK' do
+        req = Sbpayment::API::Credit::CreateCustomerTokenForEternityTokenRequest.new
+        req.cust_code = @cust_code_for_request_with_token
+        req.encrypted_flg = '0'
+        req.pay_option_manage.token = @token
+        req.pay_option_manage.token_key = @token_key
+        req.pay_method_info.resrv1 = 'テストユーザー'
+        res = req.perform
+        expect(res.status).to eq 200
+        expect(res.headers['content-type']).to include 'text/xml'
+        expect(res.body[:res_result]).to eq 'OK'
+        expect(res.body[:'res_pay_method_info.cardbrand_code']).to eq 'M'
+        expect(res.body[:'res_pay_method_info.tokenized_pan']).to eq '5250720000189007'
+      end
+    end
+  end
 end

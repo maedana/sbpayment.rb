@@ -1,0 +1,326 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session
+    body:
+      encoding: UTF-8
+      string: '{"desiredCapabilities":{"browserName":"chrome","version":"","platform":"ANY","javascriptEnabled":true,"cssSelectorsEnabled":true,"takesScreenshot":false,"nativeEvents":false,"rotatable":false,"goog:chromeOptions":{"args":["headless"]}},"capabilities":{"firstMatch":[{"browserName":"chrome","goog:chromeOptions":{"args":["headless"]}}]}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Content-Length:
+      - '336'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '679'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"81.0.4044.92","chrome":{"chromedriverVersion":"81.0.4044.69
+        (6813546031a4bc83f717a2ef7cd4ac6ec1199132-refs/branch-heads/4044@{#776})","userDataDir":"/tmp/.com.google.Chrome.eEwTA5"},"goog:chromeOptions":{"debuggerAddress":"localhost:44027"},"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"linux","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss
+        and notify","webauthn:virtualAuthenticators":true},"sessionId":"bc29c385b755c9b8f6f3ba471a17b377"}}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:36 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377/url
+    body:
+      encoding: UTF-8
+      string: '{"url":"https://jsbin.com/wufoded"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Content-Length:
+      - '35'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377/element
+    body:
+      encoding: UTF-8
+      string: '{"using":"css selector","value":"#token"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Content-Length:
+      - '41'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '88'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"element-6066-11e4-a52e-4f735466cecf":"387d4370-837d-46e6-8c86-2a61ae8a6dd1"}}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377/element/387d4370-837d-46e6-8c86-2a61ae8a6dd1/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '258'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":"F7421F26F5684C51DE5B50FA10B7FBD77D2CA6E8D68D01BCCD27AB7DC6766D9629A52320CCA746FA4FAD6B53E0F688A305AC8898DC5F50A7BAE95A0521D5AEA486F9301FDCE79E57359A43DC2AAFE67207D97A9C8A85BC2006F2E2D42342A692B5D3BA9B78B16194D44922BF393999B133CE0A3E739C0EE22ABE03"}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377/element
+    body:
+      encoding: UTF-8
+      string: '{"using":"css selector","value":"#tokenKey"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Content-Length:
+      - '44'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '88'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"element-6066-11e4-a52e-4f735466cecf":"039495cd-f4ff-40a4-8fda-51bbcc073f66"}}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377/element/039495cd-f4ff-40a4-8fda-51bbcc073f66/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '194'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":"3059301306072A8648CE3D020106082A8648CE3D030107034200042BCE97B225609B0AF1394CC5AC864F284062B584B50679B7BDB3F48F6BF7AF52B20A5A58072C8AA736BA81A719F22A3E4F06435AD8C7633243E9E98A3FB31A7C"}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: delete
+    uri: http://127.0.0.1:9515/session/bc29c385b755c9b8f6f3ba471a17b377
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/3.142.7 (ruby linux)
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/shutdown
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '40'
+      Content-Type:
+      - application/json; charset=utf-8
+    body:
+      encoding: UTF-8
+      string: '{"sessionId":"","status":0,"value":null}'
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:38 GMT
+- request:
+    method: post
+    uri: https://stbfep.sps-system.com/api/xmlapi.do
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="Shift_JIS"?><sps-api-request id="MG12-00131-101"><merchant_id>30132</merchant_id><service_id>002</service_id><cust_code>83e8e1e7519cfd8aab5dd39d57191af4</cust_code><sps_cust_info_return_flg>1</sps_cust_info_return_flg><pay_method_info><resrv1>g2WDWINng4aBW4NVgVs=</resrv1></pay_method_info><pay_option_manage><token>F7421F26F5684C51DE5B50FA10B7FBD77D2CA6E8D68D01BCCD27AB7DC6766D9629A52320CCA746FA4FAD6B53E0F688A305AC8898DC5F50A7BAE95A0521D5AEA486F9301FDCE79E57359A43DC2AAFE67207D97A9C8A85BC2006F2E2D42342A692B5D3BA9B78B16194D44922BF393999B133CE0A3E739C0EE22ABE03</token><token_key>3059301306072A8648CE3D020106082A8648CE3D030107034200042BCE97B225609B0AF1394CC5AC864F284062B584B50679B7BDB3F48F6BF7AF52B20A5A58072C8AA736BA81A719F22A3E4F06435AD8C7633243E9E98A3FB31A7C</token_key><cardbrand_return_flg>1</cardbrand_return_flg></pay_option_manage><encrypted_flg>0</encrypted_flg><request_date>20200410101038</request_date><sps_hashcode>cb1ce86adf5e12426955fc5375c1449779c6d689</sps_hashcode></sps-api-request>
+    headers:
+      User-Agent:
+      - Faraday v1.0.1
+      Content-Type:
+      - text/xml
+      Authorization:
+      - Basic MzAxMzIwMDI6ODQzNWRiZDQ4ZjIyNDk4MDdlYzIxNmMzZDVlY2FiNzE0MjY0Y2M0YQ==
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 10 Apr 2020 01:09:48 GMT
+      Server:
+      - Apache
+      Set-Cookie:
+      - JSESSIONID=A963144AE598E04EB10019CDD7196C2D.f115; Path=/api
+      Pragma:
+      - No-cache
+      Cache-Control:
+      - no-cache,no-store,max-age=0
+      Expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      Content-Length:
+      - '751'
+      Connection:
+      - close
+      Content-Type:
+      - text/xml;charset=Shift_JIS
+      Content-Language:
+      - ja
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version='1.0' encoding='Shift_JIS' ?>
+          <sps-api-response id="MG12-00131-101">
+            <res_result>OK</res_result>
+            <res_sps_transaction_id>B30132002MG120013110101052599183</res_sps_transaction_id>
+            <res_pay_method_info>
+              <tokenized_pan>5250720000189007</tokenized_pan>
+              <cc_expiration>201103</cc_expiration>
+              <cardbrand_code>M</cardbrand_code>
+              <res_payinfo_key>782ae44613960838fdc945b453895b58</res_payinfo_key>
+            </res_pay_method_info>
+            <res_sps_info>
+              <res_sps_cust_no>798289528138</res_sps_cust_no>
+              <res_sps_payment_no>001</res_sps_payment_no>
+            </res_sps_info>
+            <res_process_date>20200410100949</res_process_date>
+            <res_err_code/>
+            <res_date>20200410100949</res_date>
+          </sps-api-response>
+    http_version: 
+  recorded_at: Fri, 10 Apr 2020 01:10:39 GMT
+recorded_with: VCR 5.1.0
