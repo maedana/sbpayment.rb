@@ -1,7 +1,7 @@
 module Sbpayment
   module SbpsHashcode
-    def update_sps_hashcode
-      write_params :sps_hashcode, generate_sps_hashcode
+    def update_sps_hashcode(hashkey: Sbpayment.config.hashkey)
+      write_params :sps_hashcode, generate_sps_hashcode(hashkey: hashkey)
     end
 
     def generate_sps_hashcode(encoding: 'Shift_JIS', hashkey: Sbpayment.config.hashkey)
