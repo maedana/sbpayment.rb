@@ -9,6 +9,8 @@ module Sbpayment
     OVERRIDABLE_CONFIG_KEYS = %i[
       basic_auth_user
       basic_auth_password
+      cipher_code
+      cipher_iv
       hashkey
     ].freeze
     attr_accessor(*OVERRIDABLE_CONFIG_KEYS)
@@ -34,6 +36,8 @@ module Sbpayment
       self.basic_auth_user ||= config.basic_auth_user
       self.basic_auth_password ||= config.basic_auth_password
       self.hashkey ||= config.hashkey
+      self.cipher_code ||= config.cipher_code
+      self.cipher_iv ||= config.cipher_iv
 
       connection = Faraday.new(faraday_options) do |builder|
         builder.request :retry, max: config.retry_max_counts, interval: RETRY_INTERVAL, exceptions: [Errno::ETIMEDOUT, Timeout::Error, Faraday::TimeoutError, Faraday::ConnectionFailed]
@@ -47,8 +51,8 @@ module Sbpayment
       end
 
       update_sps_hashcode(hashkey: hashkey)
-      response = connection.post Sbpayment::API_PATH, to_sbps_xml(need_encrypt: need_encrypt?), DEFAULT_HEADERS
-      response_class.new response.status, response.headers, response.body, need_decrypt: need_encrypt?
+      response = connection.post Sbpayment::API_PATH, to_sbps_xml(need_encrypt: need_encrypt?, cipher_code: cipher_code, cipher_iv: cipher_iv), DEFAULT_HEADERS
+      response_class.new response.status, response.headers, response.body, need_decrypt: need_encrypt?, cipher_code: cipher_code, cipher_iv: cipher_iv
     end
 
     private
