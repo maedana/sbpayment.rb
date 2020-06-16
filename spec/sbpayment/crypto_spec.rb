@@ -40,6 +40,13 @@ describe Sbpayment::Crypto do
   end
 
   context 'when cipher_code and cipher_iv are defined by arguments' do
+    before do
+      Sbpayment.configure do |x|
+        x.cipher_code = nil
+        x.cipher_iv = nil
+      end
+    end
+
     describe 'encrypt' do
       let(:data) { 'abcd' }
 
