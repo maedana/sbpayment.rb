@@ -17,6 +17,15 @@ module Sbpayment
 
     include ParameterDefinition
 
+    def initialize(*arg, &blk)
+      super
+      self.basic_auth_user = Sbpayment.config.basic_auth_user
+      self.basic_auth_password = Sbpayment.config.basic_auth_password
+      self.hashkey = Sbpayment.config.hashkey
+      self.cipher_code = Sbpayment.config.cipher_code
+      self.cipher_iv = Sbpayment.config.cipher_iv
+    end
+
     def response_class
       self.class.const_get self.class.name.sub(/Request\z/, 'Response')
     end
@@ -33,15 +42,10 @@ module Sbpayment
           timeout: config.timeout
         }
       }
-      self.basic_auth_user ||= config.basic_auth_user
-      self.basic_auth_password ||= config.basic_auth_password
-      self.hashkey ||= config.hashkey
-      self.cipher_code ||= config.cipher_code
-      self.cipher_iv ||= config.cipher_iv
 
       connection = Faraday.new(faraday_options) do |builder|
         builder.request :retry, max: config.retry_max_counts, interval: RETRY_INTERVAL, exceptions: [Errno::ETIMEDOUT, Timeout::Error, Faraday::TimeoutError, Faraday::ConnectionFailed]
-        builder.request :basic_auth, self.basic_auth_user, self.basic_auth_password
+        builder.request :basic_auth, basic_auth_user, basic_auth_password
         builder.adapter Faraday.default_adapter
 
         if config.proxy_uri
