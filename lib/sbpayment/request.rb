@@ -6,6 +6,12 @@ module Sbpayment
     RETRY_INTERVAL  = 1
     DEFAULT_HEADERS = { 'content-type' => 'text/xml' }
 
+    OVERRIDABLE_CONFIG_KEYS = %i[
+      basic_auth_user
+      basic_auth_password
+    ].freeze
+    attr_accessor(*OVERRIDABLE_CONFIG_KEYS)
+
     include ParameterDefinition
 
     def response_class
@@ -24,9 +30,12 @@ module Sbpayment
           timeout: config.timeout
         }
       }
+      self.basic_auth_user ||= config.basic_auth_user
+      self.basic_auth_password ||= config.basic_auth_password
+
       connection = Faraday.new(faraday_options) do |builder|
         builder.request :retry, max: config.retry_max_counts, interval: RETRY_INTERVAL, exceptions: [Errno::ETIMEDOUT, Timeout::Error, Faraday::TimeoutError, Faraday::ConnectionFailed]
-        builder.request :basic_auth, config.basic_auth_user, config.basic_auth_password
+        builder.request :basic_auth, self.basic_auth_user, self.basic_auth_password
         builder.adapter Faraday.default_adapter
 
         if config.proxy_uri
