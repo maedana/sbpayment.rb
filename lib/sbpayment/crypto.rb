@@ -5,13 +5,13 @@ module Sbpayment
   module Crypto
     module_function
 
-    def encrypt(data)
-      self.check_cipher_keys!
+    def encrypt(data, cipher_code: Sbpayment.config.cipher_code, cipher_iv: Sbpayment.config.cipher_iv)
+      self.check_cipher_keys!(cipher_code, cipher_iv)
 
       cipher = OpenSSL::Cipher.new 'DES3'
       cipher.encrypt
-      cipher.key = Sbpayment.config.cipher_code
-      cipher.iv  = Sbpayment.config.cipher_iv
+      cipher.key = cipher_code
+      cipher.iv  = cipher_iv
       cipher.padding = 0
 
       q, r = data.bytesize.divmod 8
@@ -20,21 +20,21 @@ module Sbpayment
       cipher.update(data) + cipher.final
     end
 
-    def decrypt(data)
-      self.check_cipher_keys!
+    def decrypt(data, cipher_code: Sbpayment.config.cipher_code, cipher_iv: Sbpayment.config.cipher_iv)
+      self.check_cipher_keys!(cipher_code, cipher_iv)
 
       cipher = OpenSSL::Cipher.new 'DES3'
       cipher.decrypt
-      cipher.key = Sbpayment.config.cipher_code
-      cipher.iv  = Sbpayment.config.cipher_iv
+      cipher.key = cipher_code
+      cipher.iv  = cipher_iv
       cipher.padding = 0
 
       (cipher.update(data) + cipher.final).sub(/ +\z/, '') # or use String#rstrip
     end
 
-    def check_cipher_keys!
-      if Sbpayment.config.cipher_code.nil? || Sbpayment.config.cipher_iv.nil?
-        raise ArgumentError.new 'Either Sbpayment.config.cipher_code or Sbpayment.config.cipher_iv are not defined.'
+    def check_cipher_keys!(cipher_code, cipher_iv)
+      if cipher_code.nil? || cipher_iv.nil?
+        raise ArgumentError.new 'Either cipher_code or cipher_iv are not defined.'
       end
     end
   end

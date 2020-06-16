@@ -38,4 +38,29 @@ describe Sbpayment::Crypto do
       end
     end
   end
+
+  context 'when cipher_code and cipher_iv are defined by arguments' do
+    before do
+      Sbpayment.configure do |x|
+        x.cipher_code = nil
+        x.cipher_iv = nil
+      end
+    end
+
+    describe 'encrypt' do
+      let(:data) { 'abcd' }
+
+      it 'can encrypt data' do
+        expect(Sbpayment::Crypto.decrypt(Sbpayment::Crypto.encrypt(data, cipher_code: key, cipher_iv: iv), cipher_code: key, cipher_iv: iv)).to eq 'abcd'
+      end
+    end
+
+    describe 'decrypt' do
+      let(:data) { Sbpayment::Crypto.encrypt('abcd', cipher_code: key, cipher_iv: iv) }
+
+      it 'can decrypt encrypted data' do
+        expect(Sbpayment::Crypto.decrypt(data, cipher_code: key, cipher_iv: iv)).to eq 'abcd'
+      end
+    end
+  end
 end

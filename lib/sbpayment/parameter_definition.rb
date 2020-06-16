@@ -124,10 +124,10 @@ module Sbpayment
         (value || default).to_s.encode('Shift_JIS')
       end
 
-      def cast_for_xml(value, need_encrypt: false)
+      def cast_for_xml(value, need_encrypt: false, cipher_code: Sbpayment.config.cipher_code, cipher_iv: Sbpayment.config.cipher_iv)
         value = cast_for_hashcode value
         if need_encrypt && encrypt
-          Base64.strict_encode64 Sbpayment::Crypto.encrypt value
+          Base64.strict_encode64 Sbpayment::Crypto.encrypt value, cipher_code: cipher_code, cipher_iv: cipher_iv
         elsif type == :M
           Base64.strict_encode64 value
         else
