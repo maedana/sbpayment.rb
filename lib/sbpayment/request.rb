@@ -50,7 +50,7 @@ module Sbpayment
 
         if config.proxy_uri
           options = { uri: config.proxy_uri, user: config.proxy_user, password: config.proxy_password }
-          builder.proxy options
+          builder.proxy = options
         end
       end
 
